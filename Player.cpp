@@ -1,5 +1,5 @@
 //
-// Created by Lenovo on 18/01/2025.
+// Created by Nativ on 18/01/2025.
 //
 
 #include "Player.h"
@@ -15,21 +15,12 @@ Player& Player::operator=(const Player& other) {
     return *this;
 }
 
-//maybe should I delete this?
-int Player::getRoundCounter() const {
-    return roundCounter;
-}
-
 void Player::addToRoundCounter() {
     roundCounter++;
 }
 
 void Player::resetRoundCounter() {
     roundCounter = 0;
-}
-
-bool Player::get_ReadyForSpecialAttack() const {
-    return this->readyForSpecialAttack;
 }
 
 bool Player::IsItPossibleUseTheSpecialAttack() const {

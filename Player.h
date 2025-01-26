@@ -8,8 +8,8 @@
 
 
 class Player: public Entity {
-    //special ability field?
-protected:
+
+    protected:
     //will be controlled at the Game class
     int roundCounter;
     bool readyForSpecialAttack;
@@ -27,11 +27,9 @@ protected:
     Player(const Player& other) : Entity(other), roundCounter(other.roundCounter), readyForSpecialAttack(other.readyForSpecialAttack) {};
     Player& operator=(const Player& other);
 
-    int getRoundCounter() const;
+    //special ability player methods
     void addToRoundCounter();
     void resetRoundCounter();
-    bool get_ReadyForSpecialAttack() const;
-
     virtual bool IsItPossibleUseTheSpecialAttack() const=0;
 
     friend ostream& operator<<(ostream& os, const Player& other);

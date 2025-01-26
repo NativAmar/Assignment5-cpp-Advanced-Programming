@@ -7,6 +7,7 @@
 
 #include "Fighter.h"
 #include "Sorcerer.h"
+#include "invalidRoom.h"
 
 using namespace std;
 
@@ -91,7 +92,7 @@ void Game::parseLine(const string& line) {
         //Set room access for rooms with connections
         Room* finalRoomAddress = getRoomByID(roomID.substr(0, roomID.length() - 1));
         if (finalRoomAddress == nullptr) {
-            throw out_of_range("Invalid room");
+            throw invalidRoom();
         }
         finalRoomAddress->setRoomAccess(newRoom, stoi(&roomID.back()));
     }
@@ -132,6 +133,10 @@ void Game::initializer() {
         cout << "Memory problem" << endl;
         cleanAndClear();
     }
+    catch (invalidRoom& e) {
+        cout<< e.what() << endl;
+        cleanAndClear();
+    }
 }
 
 void Game::run() {
@@ -144,7 +149,7 @@ void Game::run() {
             cout << "You arrive to an empty room " << endl;
         }
         if (currentRoom->m_campfire > 0) {
-            cout << "You sit by the campfire and heal " << currentRoom->m_campfire << " health" << endl;
+            cout << "You sit by the campfire and heal " << currentRoom->m_campfire << " health " << endl;
             *playerEntity += currentRoom->m_campfire;
             playerEntity->addToRoundCounter();
         }
@@ -159,18 +164,18 @@ void Game::run() {
             else {
                 compareRes = "equally sized";
             }
-            cout << "You encounter a " << compareRes << " " << currentRoom->roomMonster->getType() <<  endl;
+            cout << "You encounter a " << compareRes << " " << currentRoom->roomMonster->getType() << " " <<  endl;
             cout << *(currentRoom->roomMonster) << endl;
             while (currentRoom->roomMonster->getCurrentAmountOfLife() != 0 || playerEntity->getCurrentAmountOfLife() != 0) {
                 (playerEntity)->PlayerAttackMonster(*(currentRoom->roomMonster));
                 if (playerEntity->getType()=="sorcerer") {
                     if (playerEntity->IsItPossibleUseTheSpecialAttack())
-                        cout << "You deal " << playerEntity->getAttackValue() * 2 << " damage to the "<< currentRoom->roomMonster->getType() << " and leave it with " << currentRoom->roomMonster->getCurrentAmountOfLife() << " health" << endl;
+                        cout << "You deal " << playerEntity->getAttackValue() * 2 << " damage to the "<< currentRoom->roomMonster->getType() << " and leave it with " << currentRoom->roomMonster->getCurrentAmountOfLife() << " health " << endl;
                     else
-                        cout << "You deal " << playerEntity->getAttackValue()<< " damage to the "<< currentRoom->roomMonster->getType() << " and leave it with " << currentRoom->roomMonster->getCurrentAmountOfLife() << " health" << endl;
+                        cout << "You deal " << playerEntity->getAttackValue()<< " damage to the "<< currentRoom->roomMonster->getType() << " and leave it with " << currentRoom->roomMonster->getCurrentAmountOfLife() << " health " << endl;
                 }
                 else
-                    cout << "You deal " << playerEntity->getAttackValue() << " damage to the "<< currentRoom->roomMonster->getType() << " and leave it with " << currentRoom->roomMonster->getCurrentAmountOfLife() << " health" << endl;
+                    cout << "You deal " << playerEntity->getAttackValue() << " damage to the "<< currentRoom->roomMonster->getType() << " and leave it with " << currentRoom->roomMonster->getCurrentAmountOfLife() << " health " << endl;
                 if (currentRoom->roomMonster->getCurrentAmountOfLife() == 0) {
                     cout << "You defeat the " << currentRoom->roomMonster->getType() << " and go on with your journey " << endl;
                     break;
@@ -178,18 +183,18 @@ void Game::run() {
                 currentRoom->roomMonster->MonsterAttackPlayer(*playerEntity);
                 if (playerEntity->getType()=="fighter") {
                     if (playerEntity->IsItPossibleUseTheSpecialAttack())
-                        cout << "The " << currentRoom->roomMonster->getType() << " deals 0 damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health" << endl;
+                        cout << "The " << currentRoom->roomMonster->getType() << " deals 0 damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health " << endl;
                     else if (currentRoom->roomMonster->getType() == "dragon")
-                        cout << "The " << currentRoom->roomMonster->getType() << " deals " << currentRoom->roomMonster->getAttackValue() * 0.5 << " damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health" << endl;
+                        cout << "The " << currentRoom->roomMonster->getType() << " deals " << currentRoom->roomMonster->getAttackValue() * 0.5 << " damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health " << endl;
                     else
-                        cout << "The " << currentRoom->roomMonster->getType() << " deals " << currentRoom->roomMonster->getAttackValue() * 2 << " damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health" << endl;
+                        cout << "The " << currentRoom->roomMonster->getType() << " deals " << currentRoom->roomMonster->getAttackValue() * 2 << " damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health " << endl;
                 }
                 else { // Sorcerer
                     if (currentRoom->roomMonster->getType() == "dragon")
-                        cout << "The " << currentRoom->roomMonster->getType() << " deals " << currentRoom->roomMonster->getAttackValue() * 2 << " damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health" << endl;
+                        cout << "The " << currentRoom->roomMonster->getType() << " deals " << currentRoom->roomMonster->getAttackValue() * 2 << " damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health " << endl;
 
                     else //goblin
-                        cout << "The " << currentRoom->roomMonster->getType() << " deals " << currentRoom->roomMonster->getAttackValue() * 0.5 << " damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health" << endl;
+                        cout << "The " << currentRoom->roomMonster->getType() << " deals " << currentRoom->roomMonster->getAttackValue() * 0.5 << " damage to you and leaves you with " << playerEntity->getCurrentAmountOfLife() << " health " << endl;
 
                 }
                 if (playerEntity->getCurrentAmountOfLife() == 0) {

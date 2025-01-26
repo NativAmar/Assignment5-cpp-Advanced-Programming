@@ -8,12 +8,12 @@
 
 
 class Monster : public Entity {
-    //The monster's damage value depends on the enemy she is facing
 
     public:
     //constructors
     Monster() : Entity() {};
     Monster(const string &name, int maxAmountOfLife, int attackValue) : Entity(name, maxAmountOfLife, attackValue) {};
+
     //destructor
     virtual ~Monster();
 
@@ -27,7 +27,6 @@ class Monster : public Entity {
     Monster& MonsterAttackedByFighter(const Player& player);
 
     friend ostream& operator<<(ostream& os, const Monster& other);
-
 };
 
 

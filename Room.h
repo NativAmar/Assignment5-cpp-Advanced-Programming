@@ -30,7 +30,7 @@ public:
     bool setRoomAccess(Room* room, int index);
 
     string getID() const;
-    friend class Game;
 
+    friend class Game;
 };
 #endif
