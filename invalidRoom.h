@@ -9,6 +9,8 @@
 
 class invalidRoom : public std::exception {
     public:
+    invalidRoom()=default;
+    ~invalidRoom() noexcept override = default;
     const char *what() const noexcept override;
 };
 
