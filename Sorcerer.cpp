@@ -3,6 +3,7 @@
 //
 
 #include "Sorcerer.h"
+#include "Monster.h"
 
 Sorcerer::~Sorcerer() = default;
 
@@ -15,28 +16,33 @@ Sorcerer& Sorcerer::operator=(const Sorcerer& other) {
 }
 
 string Sorcerer::getType() const {
-    return "Sorcerer";
+    return "sorcerer";
 }
 
-// Sorcerer &Sorcerer::specialAttack(const Entity &other) {
-//     //logic for value attack * 2
-//     return *this;
-// }
+bool Sorcerer::IsItPossibleUseTheSpecialAttack() const {
+    if (this->roundCounter == 0 || this->roundCounter == 5)
+        return true;
+    return false;
+}
 
-Sorcerer & Sorcerer::attack(Entity &other) {
-    if (this->get_ReadyForSpecialAttack()) {
-        //special attack use
-        other.operator-=(2*attackValue);
-        resetRoundCounter();
-        return *this;
-    }
-    other.operator-=(*this);
+Player& Sorcerer::PlayerAttackMonster(Monster &other) { //Sorcerer attack monster
+    other.MonsterAttackedBySorcerer(*this);
     return *this;
 }
 
-double Sorcerer::getDamageMultiplier(const Entity &other) const {
-    if (other.getType() == "Dragon")
-        return 2.0;
-    return 0.5;
+Sorcerer& Sorcerer::PlayerAttackedByGoblin(const Monster &other) {
+    int damage = static_cast<int>(std::round(0.5 * other.getAttackValue()));
+    this->currentAmountOfLife -= damage;
+    if (this->currentAmountOfLife <= 0)
+        this->currentAmountOfLife = 0;
+    return *this;
+}
+
+Sorcerer & Sorcerer::PlayerAttackedByDragon(const Monster &other) {
+    int damage = static_cast<int>(std::round(2 * other.getAttackValue()));
+    this->currentAmountOfLife -= damage;
+    if (this->currentAmountOfLife <= 0)
+        this->currentAmountOfLife = 0;
+    return *this;
 }
 

@@ -3,28 +3,33 @@
 //
 
 #include "Fighter.h"
+#include "Monster.h"
 
 
 Fighter::~Fighter() = default;
 
-
-// Fighter & Fighter::specialAttack(const Entity &other) {
-//     //here I should set the next attack against the fighter to 0
-//     //doing nothing , maybe should print somthing
-//     roundCounter=0;
-//     return *this;
-// }
-
-Fighter& Fighter::attack(Entity &other) {
-    //special ability checked in the monster's classes
-    other.operator-=(*this);
+Fighter & Fighter::PlayerAttackedByGoblin(const Monster &other) {
+    if (this->IsItPossibleUseTheSpecialAttack()) {
+        this->resetRoundCounter();
+        return *this;
+    }
+    int damage = static_cast<int>(std::round(2 * other.getAttackValue()));
+    this->currentAmountOfLife -= damage;
+    if (this->currentAmountOfLife < 0)
+        this->currentAmountOfLife = 0;
     return *this;
 }
 
-double Fighter::getDamageMultiplier(const Entity &other) const {
-    if (other.getType() == "Dragon")
-        return 0.5;
-    return 2.0;
+Fighter & Fighter::PlayerAttackedByDragon(const Monster &other) {
+    if (this->IsItPossibleUseTheSpecialAttack()) {
+        this->resetRoundCounter();
+        return *this;
+    }
+    int damage = static_cast<int>(std::round(0.5 * other.getAttackValue()));
+    this->currentAmountOfLife -= damage;
+    if (this->currentAmountOfLife < 0)
+        this->currentAmountOfLife = 0;
+    return *this;
 }
 
 Fighter& Fighter::operator=(const Fighter& other) {
@@ -35,16 +40,16 @@ Fighter& Fighter::operator=(const Fighter& other) {
 }
 
 string Fighter::getType() const {
-    return "Fighter";
+    return "fighter";
 }
 
-Fighter & Fighter::operator-=(const Entity &other) {
-    if (IsItPossibleUseTheSpecialAttack()) {
-        //special ability use
-        //print something about that?
-        resetRoundCounter();
-        return *this;
-    }
-    Player::operator-=(other);
+Fighter& Fighter::PlayerAttackMonster(Monster &other) { //fighter attack monster
+    other.MonsterAttackedByFighter(*this);
     return *this;
+}
+
+bool Fighter::IsItPossibleUseTheSpecialAttack() const {
+    if (this->roundCounter == 0 || this->roundCounter == 4)
+        return true;
+    return false;
 }

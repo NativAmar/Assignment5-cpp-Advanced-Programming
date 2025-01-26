@@ -7,7 +7,6 @@
 
 Goblin::~Goblin() = default;
 
-
 Goblin& Goblin::operator=(const Goblin& rhs) {
     if (this == &rhs)
         return *this;
@@ -16,10 +15,10 @@ Goblin& Goblin::operator=(const Goblin& rhs) {
 }
 
 string Goblin::getType() const {
-    return "Goblin";
+    return "goblin";
 }
 
-Goblin & Goblin::attack(Entity &other) {
-    Monster::attack(other);
+Goblin& Goblin::MonsterAttackPlayer(Player &player) {
+    player.PlayerAttackedByGoblin(*this);
     return *this;
 }

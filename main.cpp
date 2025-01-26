@@ -1,16 +1,25 @@
-//#include <iostream>
 
 #include "Game.h"
 
 int main(int argc, char const *argv[])
 {
-    string playerFirstChar = argv[2];
-    int amountOfLife = stoi(argv[3]);
-    int damageLevel = stoi(argv[4]);
-    const string inputFile = argv[5];
-    Game game{playerFirstChar, inputFile, amountOfLife, damageLevel};
+    string playerFirstChar = argv[1];
+    int amountOfLife = stoi(argv[2]);
+    int damageLevel = stoi(argv[3]);
+    const string inputFile = argv[4];
+    try {
 
-    game.initializer();
-    game.run();
+        Game game{playerFirstChar, inputFile, amountOfLife, damageLevel};
+
+        game.initializer();
+        game.run();
+    }
+    catch (bad_alloc &e) { //constructor fail
+        cout << "Memory problem" << endl;
+    }
+    catch (const exception& e) {
+        cout << e.what() << endl;
+    }
     return 0;
 }
+

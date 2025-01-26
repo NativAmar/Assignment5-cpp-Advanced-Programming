@@ -9,8 +9,8 @@
 class Room {
     string room_id;
     int m_campfire;
-    unique_ptr<Monster> roomMonster;//create Entity in the contractor method if there is a monster in the room
-    vector<Room*> roomsAccess;//dynamic array of Room pointers
+    unique_ptr<Monster> roomMonster;
+    vector<Room*> roomsAccess;//array of Room pointers
     int roomsCounter;
     static int roomsCapacity;
 

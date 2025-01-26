@@ -26,7 +26,7 @@ class Dragon: public Monster {
 
     virtual string getType() const;
 
-    Dragon& attack(Entity& other);
+    Dragon& MonsterAttackPlayer(Player &player);
 
 };
 

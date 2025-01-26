@@ -15,7 +15,7 @@ public:
     Sorcerer(const string& name, int maxAmountOfLife, int damageValue) : Player(name, maxAmountOfLife, damageValue) {};
 
     //destructor
-    ~Sorcerer();
+    virtual ~Sorcerer();
 
     //copy constructor and assignment operator
     Sorcerer(const Sorcerer& other) : Player(other) {};
@@ -23,12 +23,21 @@ public:
 
     virtual string getType() const;
 
+    bool IsItPossibleUseTheSpecialAttack() const;
+
+
     //Sorcerer& operator-=(const Entity& other);//reduce the currentAmountOfLife according to the received Monster's attackValue
     //Sorcerer& specialAttack(const Entity& other);//?
 
-    Sorcerer& attack(Entity &other);
+    //Sorcerer& attack(Entity &other);
 
-    double getDamageMultiplier(const Entity& other) const;
+    //double getDamageMultiplier(const Entity& other) const;
+
+    Player &PlayerAttackMonster(Monster &other);
+
+    Sorcerer &PlayerAttackedByGoblin(const Monster &other);
+
+    Sorcerer &PlayerAttackedByDragon(const Monster &other);
 };
 
 

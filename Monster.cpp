@@ -15,16 +15,26 @@ Monster & Monster::operator=(const Monster &monster) {
     return *this;
 }
 
-Monster& Monster::operator-=(const Entity &other) {
-    currentAmountOfLife -= other.getAttackValue();
-    if (currentAmountOfLife <= 0)
-        currentAmountOfLife = 0;
+Monster & Monster::MonsterAttackedBySorcerer(const Player &other) {
+    if (other.IsItPossibleUseTheSpecialAttack())
+        this->currentAmountOfLife -= other.getAttackValue() * 2;
+    else
+        this->currentAmountOfLife -= other.getAttackValue();
+    if(this->currentAmountOfLife < 0)
+        this->currentAmountOfLife = 0;
     return *this;
 }
 
-Monster & Monster::attack(Entity &other) {
-    other.operator-=(*this);
+Monster & Monster::MonsterAttackedByFighter(const Player &other) {
+    this->currentAmountOfLife -= other.getAttackValue();
+    if(this->currentAmountOfLife < 0)
+        this->currentAmountOfLife = 0;
     return *this;
+}
+
+ostream& operator<<(ostream& os, const Monster& other) {
+    os << other.name << " (" << other.currentAmountOfLife << "/" << other.maxAmountOfLife << ")" << " - " << other.attackValue;
+    return os;
 }
 
 

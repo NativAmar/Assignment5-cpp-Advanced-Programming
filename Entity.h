@@ -1,10 +1,15 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-using namespace std;
+
 #include <iostream>
 #include <string>
 #include <cmath>
+
+using namespace std;
+
+class Monster;
+class Player;
 
 class Entity {
 
@@ -33,18 +38,20 @@ public:
     virtual ~Entity();
 
     Entity& operator+=(int num); //increase the currentAmountOfLife by the num which received
-    virtual Entity& operator-=(const Entity& other)=0; //reduce the currentAmountOfLife according to the received character's attackValue
+    Entity& operator-=(const Entity& other); //reduce the currentAmountOfLife according to the received character's attackValue
     virtual Entity& operator-=(int num); //reduce the attckValue according the received number
 
-    virtual Entity& attack(Entity& other)=0;
+    virtual Monster& MonsterAttackPlayer(Player& player);
+
+    virtual Player& PlayerAttackMonster(Monster& monster);
 
     int getCurrentAmountOfLife() const;
     int getAttackValue() const;
-    virtual string getType() const;
+    virtual string getType() const=0;
 
     bool operator==(const Entity& other) const; //This operator will compare characters by their damage multiplied by the current amount of life they have
-    bool operator>(const Entity& other) const;
-    bool operator<(const Entity &other) const;
+    virtual bool operator>(const Entity& other) const;
+    virtual bool operator<(const  Entity&other) const;
 
     friend ostream& operator<<(ostream& os, const Entity& other);//print
 };

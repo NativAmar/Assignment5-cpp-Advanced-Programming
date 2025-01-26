@@ -24,8 +24,7 @@ public:
 
     virtual string getType() const;
 
-    Goblin& attack(Entity& other);
-
+    Goblin& MonsterAttackPlayer(Player& player);
 };
 
 

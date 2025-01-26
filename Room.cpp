@@ -10,7 +10,7 @@ int Room::roomsCapacity = 9;
 
 Room::Room(const string &roomID, const string& monsterFirstChar,int campfire, int monsterCurrAmountOfLife, int monsterAttackValue): room_id(roomID) ,m_campfire(campfire), roomMonster(nullptr), roomsCounter(0) {
     if (monsterCurrAmountOfLife < 0 || monsterAttackValue < 0) {
-        throw invalid_argument("Invalid input");
+        throw invalid_argument("Invalid input for room creation");
     }
     if (monsterCurrAmountOfLife != 0 && monsterAttackValue != 0) {
         //create the room's monster
@@ -20,11 +20,7 @@ Room::Room(const string &roomID, const string& monsterFirstChar,int campfire, in
         else if (monsterFirstChar == "G") {
             roomMonster = unique_ptr<Goblin>(new Goblin("Goblin", monsterCurrAmountOfLife, monsterAttackValue));
         }
-        //entry room
-        //roomMonster = nullptr;
-    }//empty room
-
-
+    }
 }
 
 //copy constructor
@@ -41,7 +37,9 @@ Room::Room(const Room &other) {
         this->roomMonster = nullptr;
 }
 
-Room::~Room() = default;
+Room::~Room() {
+    roomsAccess.clear();//handle the rooms memory at the Game destructor
+}
 
 // Assignment Operator
 Room &Room::operator=(const Room *other) {

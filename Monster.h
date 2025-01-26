@@ -23,8 +23,10 @@ class Monster : public Entity {
     Monster(const Monster &monster) : Entity(monster) {};
     Monster& operator=(const Monster &monster);
 
-    Monster& operator-=(const Entity& other);
-    Monster& attack(Entity& other);
+    Monster& MonsterAttackedBySorcerer(const Player& player);
+    Monster& MonsterAttackedByFighter(const Player& player);
+
+    friend ostream& operator<<(ostream& os, const Monster& other);
 
 };
 

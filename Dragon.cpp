@@ -4,6 +4,8 @@
 
 #include "Dragon.h"
 
+#include "Player.h"
+
 Dragon::~Dragon() = default;
 
 Dragon & Dragon::operator=(const Dragon &dragon) {
@@ -14,15 +16,11 @@ Dragon & Dragon::operator=(const Dragon &dragon) {
 }
 
 string Dragon::getType() const {
-    return "Dragon";
+    return "dragon";
 }
 
-Dragon & Dragon::attack(Entity &other) {
-    Monster::attack(other);
+Dragon& Dragon:: MonsterAttackPlayer(Player &player) {
+    player.PlayerAttackedByDragon(*this);
     return *this;
 }
-
-
-
-
 

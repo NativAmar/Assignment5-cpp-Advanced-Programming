@@ -38,20 +38,15 @@ bool Player::IsItPossibleUseTheSpecialAttack() const {
     return false;
 }
 
-//take care the different damage level depend on the Entities in the battle
-Player& Player::operator-=(const Entity &other) {
-    int damage = static_cast<int>(std::round(this->getDamageMultiplier(other) * other.getAttackValue()));
-    currentAmountOfLife -= damage;
+bool Player::operator<(const Entity &other) const {
+    return Entity::operator<(other);
+}
 
-    if (currentAmountOfLife <= 0)
-        currentAmountOfLife = 0;
-
-    return *this;
+bool Player::operator>(const Entity &other) const {
+    return Entity::operator>(other);
 }
 
 ostream& operator<<(ostream& os, const Player& other) {
     os << other.name << " (" << other.currentAmountOfLife << "/" << other.maxAmountOfLife << ")" << " - " << other.attackValue;
     return os;
 }
-
-

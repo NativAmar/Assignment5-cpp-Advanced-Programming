@@ -8,7 +8,7 @@
 
 
 class Fighter : public Player {
-    //special ability once in 4 rounds
+
 public:
     //constructors
     Fighter(): Player() {};
@@ -23,12 +23,12 @@ public:
 
     virtual string getType() const;
 
-    Fighter& operator-=(const Entity &other);//reduce the currentAmountOfLife according to the received Monster's attackValue
-    //Fighter& specialAttack(const Entity & other);
+    Fighter &PlayerAttackMonster(Monster &other);
 
-    Fighter& attack(Entity &other);
+    bool IsItPossibleUseTheSpecialAttack() const;
 
-    double getDamageMultiplier(const Entity& other) const;
+    Fighter& PlayerAttackedByGoblin(const Monster &other);
+    Fighter& PlayerAttackedByDragon(const Monster &other);
 
 };
 

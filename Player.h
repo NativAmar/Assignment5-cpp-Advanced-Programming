@@ -18,7 +18,7 @@ protected:
     //Constructors
     Player() : Entity(), roundCounter(0), readyForSpecialAttack(true) {};
     //initialized rounctCounter with -1 for the first round in the game
-    Player(const string &name, int maxAmountOfLife, int damageValue) : Entity(name, maxAmountOfLife, damageValue), roundCounter(-1), readyForSpecialAttack(true) {};
+    Player(const string &name, int maxAmountOfLife, int damageValue) : Entity(name, maxAmountOfLife, damageValue), roundCounter(-1),readyForSpecialAttack(true){};
 
     //Destructor
     virtual ~Player();
@@ -32,17 +32,16 @@ protected:
     void resetRoundCounter();
     bool get_ReadyForSpecialAttack() const;
 
-    //virtual Player& specialAttack(const Entity& other)=0;//?
-    bool IsItPossibleUseTheSpecialAttack() const;
-    virtual double getDamageMultiplier(const Entity& other) const=0;
-    Player& operator-=(const Entity &other);
+    virtual bool IsItPossibleUseTheSpecialAttack() const=0;
 
     friend ostream& operator<<(ostream& os, const Player& other);
 
-    //virtual Player& attack(Entity& other)=0;
+    virtual Player& PlayerAttackedByGoblin(const Monster &monster)=0;
+    virtual Player& PlayerAttackedByDragon(const Monster &monster)=0;
 
-    //reduce the currentAmountOfLife according to the received Monster attackValue
-
+    virtual bool operator<(const Entity& other) const;
+    virtual bool operator>(const Entity& other) const;
+    
 };
 
 

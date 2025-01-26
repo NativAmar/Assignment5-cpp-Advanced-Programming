@@ -18,6 +18,12 @@ Entity& Entity::operator-=(int num) {
     return *this;
 }
 
+Monster & Entity::MonsterAttackPlayer(Player &player) {
+}
+
+Player & Entity::PlayerAttackMonster(Monster &monster) {
+}
+
 Entity& Entity::operator=(const Entity& other) {
     if (this == &other)
         return *this;
@@ -34,10 +40,6 @@ int Entity::getCurrentAmountOfLife() const {
 
 int Entity::getAttackValue() const {
     return this->attackValue;
-}
-
-string Entity::getType() const {
-    return "Entity";
 }
 
 bool Entity::operator==(const Entity& other) const {
